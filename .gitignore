@@ -1,0 +1,16 @@
+# バックエンド
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# フロントエンド
+node_modules/
+/build
+.env.local
+.env.development.local
+
+# エディタ
+.vscode/
+.idea/
+.DS_Store
