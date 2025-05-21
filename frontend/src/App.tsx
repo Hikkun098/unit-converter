@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="min-h-screen bg-gray-50 p-4">
+      {/* ヘッダー部分 */}
+      <header className="mb-8">
+        <h1 className="text-3xl font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-500 to-purple-500">
+          ConvertPro
+        </h1>
       </header>
+
+      {/* ここにメインコンテンツが入ります */}
+      <main className="mt-8">
+        {/* まだ空の状態 */}
+      </main>
     </div>
   );
 }
