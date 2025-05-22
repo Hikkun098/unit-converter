@@ -10,18 +10,43 @@ function App() {
         </h1>
       </header>
 
+      {/* カテゴリグリッド */}
       <main className="mt-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+        <div className="grid grid-cols-3 gap-4 max-w-4xl">
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
             <div className="text-blue-500 font-medium text-center">Distance</div>
           </div>
           
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
             <div className="text-blue-500 font-medium text-center">Data Size</div>
           </div>
           
-          <div className="bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
             <div className="text-blue-500 font-medium text-center">Weight</div>
+          </div>
+          
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+            <div className="text-blue-500 font-medium text-center">Information Volume</div>
+          </div>
+          
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+            <div className="text-blue-500 font-medium text-center">Transfer Rate</div>
+          </div>
+          
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+            <div className="text-blue-500 font-medium text-center">Temperature</div>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+            <div className="text-blue-500 font-medium text-center">Hour</div>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+            <div className="text-blue-500 font-medium text-center">Accelerate</div>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200">
+            <div className="text-blue-500 font-medium text-center">Velocity</div>
           </div>
         </div>
       </main>
