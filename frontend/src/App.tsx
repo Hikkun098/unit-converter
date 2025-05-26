@@ -94,11 +94,17 @@ function App() {
   const [fromUnit, setFromUnit] = useState('m');
   const [toUnit, setToUnit] = useState('km');
 
-  // カテゴリクリック時の処理
-  const handleCategoryClick = (categoryName: string) => {
-    setSelectedCategory(categoryName);
-    setIsModalOpen(true);
-  };
+const handleCategoryClick = (categoryName: string) => {
+  setSelectedCategory(categoryName);
+  setIsModalOpen(true);
+  
+  // 選択されたカテゴリの単位を取得
+  const currentUnits = (unitData as any)[categoryName]?.units || [];
+  if (currentUnits.length > 0) {
+    setFromUnit(currentUnits[0]);  // 最初の単位を設定
+    setToUnit(currentUnits[1] || currentUnits[0]);  // 2番目の単位を設定
+  }
+};
 
   // モーダルを閉じる処理
   const closeModal = () => {
@@ -109,15 +115,18 @@ function App() {
   };
 
   // 変換処理（簡単な例：距離の場合）
-  const handleConvert = () => {
-    const value = parseFloat(inputValue);
-    if (!isNaN(value)) {
-      // 簡単な変換例（m to km）
-      if (fromUnit === 'm' && toUnit === 'km') {
-        setOutputValue((value / 1000).toString());
-      }
+const handleConvert = () => {
+  const value = parseFloat(inputValue);
+  if (!isNaN(value)) {
+    const conversions = (unitData as any)[selectedCategory]?.conversions;
+    if (conversions) {
+      // 基準単位に変換してから目標単位に変換
+      const baseValue = value * conversions[fromUnit];
+      const result = baseValue / conversions[toUnit];
+      setOutputValue(result.toString());
     }
-  };
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -243,9 +252,17 @@ function App() {
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="値を入力"
                 />
-                <div className="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg min-w-[60px] text-center">
-                  {fromUnit}
-                </div>
+                <select
+                  value={fromUnit}
+                  onChange={(e) => setFromUnit(e.target.value)}
+                  className="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg min-w-[80px] border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {(unitData as any)[selectedCategory]?.units.map((unit: string) => (
+                    <option key={unit} value={unit}>
+                      {unit}
+                    </option>
+                  ))}
+                </select>
                 <button
                   onClick={handleConvert}
                   className="px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
@@ -266,9 +283,17 @@ function App() {
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
                   placeholder="変換結果"
                 />
-                <div className="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg min-w-[60px] text-center">
-                  {toUnit}
-                </div>
+                <select
+                  value={toUnit}
+                  onChange={(e) => setToUnit(e.target.value)}
+                  className="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg min-w-[80px] border focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {(unitData as any)[selectedCategory]?.units.map((unit: string) => (
+                    <option key={unit} value={unit}>
+                      {unit}
+                    </option>
+                  ))}
+                </select>
                 <button className="px-4 py-3 bg-gray-300 text-gray-500 rounded-lg">
                   ⇄
                 </button>
