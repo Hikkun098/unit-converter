@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {unitData} from './data/unitData';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import { CategoryCard } from './components/CategoryCard';
 
 
 function App() {
@@ -50,74 +52,56 @@ const handleConvert = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* ヘッダー */}
       <Header />
-      
+
       {/* メインコンテンツエリア */}
       <div className="flex-1 flex gap-6 p-4">
         {/* 左側：メインコンテンツ */}
         <main className="flex-1">
           <div className="grid grid-cols-3 gap-4 max-w-4xl">
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Distance')}
-            >
-              <div className="text-blue-500 font-medium text-center">Distance</div>
-            </div>
+            <CategoryCard 
+              name="Distance" 
+              onClick={() => handleCategoryClick('Distance')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Data Size')}
-            >
-              <div className="text-blue-500 font-medium text-center">Data Size</div>
-            </div>
+            <CategoryCard 
+              name="Data Size" 
+              onClick={() => handleCategoryClick('Data Size')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Weight')}
-            >
-              <div className="text-blue-500 font-medium text-center">Weight</div>
-            </div>
+            <CategoryCard 
+              name="Weight" 
+              onClick={() => handleCategoryClick('Weight')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Time')}
-            >
-              <div className="text-blue-500 font-medium text-center">Time</div>
-            </div>
+            <CategoryCard 
+              name="Time" 
+              onClick={() => handleCategoryClick('Time')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Transfer Rate')}
-            >
-              <div className="text-blue-500 font-medium text-center">Transfer Rate</div>
-            </div>
+            <CategoryCard 
+              name="Transfer Rate" 
+              onClick={() => handleCategoryClick('Transfer Rate')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Temperature')}
-            >
-              <div className="text-blue-500 font-medium text-center">Temperature</div>
-            </div>
+            <CategoryCard 
+              name="Temperature" 
+              onClick={() => handleCategoryClick('Temperature')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Volume')}
-            >
-              <div className="text-blue-500 font-medium text-center">Volume</div>
-            </div>
+            <CategoryCard 
+              name="Volume" 
+              onClick={() => handleCategoryClick('Volume')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Velocity')}
-            >
-              <div className="text-blue-500 font-medium text-center">Velocity</div>
-            </div>
+            <CategoryCard 
+              name="Velocity" 
+              onClick={() => handleCategoryClick('Velocity')} 
+            />
             
-            <div 
-              className="bg-white p-6 rounded-xl shadow hover:shadow-md transition-shadow cursor-pointer border border-blue-200"
-              onClick={() => handleCategoryClick('Accelerate')}
-            >
-              <div className="text-blue-500 font-medium text-center">Accelerate</div>
-            </div>
+            <CategoryCard 
+              name="Accelerate" 
+              onClick={() => handleCategoryClick('Accelerate')} 
+            />
           </div>
         </main>
 
@@ -145,9 +129,7 @@ const handleConvert = () => {
       </div>
 
       {/* フッター */}
-      <footer className="bg-white border-t border-gray-200 p-4 text-center">
-        <p className="text-gray-500 text-sm">© 2025 ConvertPro - シンプルな単位変換ツール</p>
-      </footer>
+      <Footer />
 
       {/* モーダル */}
       {isModalOpen && (
