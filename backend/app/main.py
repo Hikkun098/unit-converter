@@ -6,15 +6,14 @@ app = FastAPI()
 def hello():
     return {"message": "Hello!"}
 
-# 新しく追加 ↓
 @app.get("/api/categories")
 def get_categories():
     return {
         "categories": [
-            {"id": "distance", "name": "Distance"},
-            {"id": "data_size", "name": "Data Size"},
-            {"id": "weight", "name": "Weight"},
-            {"id": "time", "name": "Time"},
-            {"id": "temperature", "name": "Temperature"}
+            {"id": "distance", "name": "距離"},
+            {"id": "data_size", "name": "データサイズ"}, 
+            {"id": "weight", "name": "重量"},
+            {"id": "time", "name": "時間"},
+            {"id": "temperature", "name": "温度"}
         ]
     }
