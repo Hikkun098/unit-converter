@@ -38,37 +38,33 @@ def get_categories():
 # 単位変換API
 @app.post("/api/convert", response_model=ConvertResponse)
 def convert_units(request: ConvertRequest):
-    # 距離の変換データ（フロントエンドと同じ）
+    # 距離の変換データ
     distance_units = {
-        "m": 1,         # 基準単位
-        "km": 1000,
-        "cm": 0.01,
-        "mm": 0.001,
-        "ft": 0.3048,
-        "inch": 0.0254
+        "m": 1, "km": 1000, "cm": 0.01, "mm": 0.001, "ft": 0.3048, "inch": 0.0254
     }
     
-    # 現在は距離のみ対応
+    # 重量の変換データ（新しく追加）
+    weight_units = {
+        "g": 1,         # 基準単位
+        "kg": 1000,
+        "lb": 453.592,
+        "oz": 28.3495
+    }
+    
     if request.category == "distance":
-        # 基準単位（m）に変換
         value_in_meters = request.value * distance_units[request.from_unit]
-        # 目標単位に変換
         result = value_in_meters / distance_units[request.to_unit]
-        
-        # 結果を返す
-        return ConvertResponse(
-            value=request.value,
-            from_unit=request.from_unit,
-            to_unit=request.to_unit,
-            result=result,
-            formula=f"{request.value} {request.from_unit} → {result} {request.to_unit}"
-        )
+    elif request.category == "weight":
+        value_in_grams = request.value * weight_units[request.from_unit]
+        result = value_in_grams / weight_units[request.to_unit]
     else:
-        # 他のカテゴリは後で実装
+        # 未対応カテゴリ
         return ConvertResponse(
-            value=request.value,
-            from_unit=request.from_unit,
-            to_unit=request.to_unit,
-            result=0,
-            formula="未対応のカテゴリです"
+            value=request.value, from_unit=request.from_unit, to_unit=request.to_unit,
+            result=0, formula="未対応のカテゴリです"
         )
+    
+    return ConvertResponse(
+        value=request.value, from_unit=request.from_unit, to_unit=request.to_unit,
+        result=result, formula=f"{request.value} {request.from_unit} → {result} {request.to_unit}"
+    )
