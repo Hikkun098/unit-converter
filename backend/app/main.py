@@ -1,21 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from data.unit_data import UNIT_DATA
 
-# リクエストの形を定義
+
 class ConvertRequest(BaseModel):
-    value: float        # 5.0
-    from_unit: str      # "m" 
-    to_unit: str        # "cm"
-    category: str       # "distance"
+    value: float
+    from_unit: str
+    to_unit: str
+    category: str
 
-# レスポンスの形を定義  
 class ConvertResponse(BaseModel):
-    value: float        # 5.0
-    from_unit: str      # "m"
-    to_unit: str        # "cm" 
-    result: float       # 500.0
-    formula: str        # "5 m → 500 cm"
-
+    value: float
+    from_unit: str
+    to_unit: str
+    result: float
+    formula: str
 
 app = FastAPI()
 
@@ -38,33 +37,19 @@ def get_categories():
 # 単位変換API
 @app.post("/api/convert", response_model=ConvertResponse)
 def convert_units(request: ConvertRequest):
-    # 距離の変換データ
-    distance_units = {
-        "m": 1, "km": 1000, "cm": 0.01, "mm": 0.001, "ft": 0.3048, "inch": 0.0254
-    }
-    
-    # 重量の変換データ（新しく追加）
-    weight_units = {
-        "g": 1,         # 基準単位
-        "kg": 1000,
-        "lb": 453.592,
-        "oz": 28.3495
-    }
-    
-    if request.category == "distance":
-        value_in_meters = request.value * distance_units[request.from_unit]
-        result = value_in_meters / distance_units[request.to_unit]
-    elif request.category == "weight":
-        value_in_grams = request.value * weight_units[request.from_unit]
-        result = value_in_grams / weight_units[request.to_unit]
+    # データを外部ファイルから取得
+    if request.category in UNIT_DATA:
+        units = UNIT_DATA[request.category]
+        base_value = request.value * units[request.from_unit]
+        result = base_value / units[request.to_unit]
+        
+        return ConvertResponse(
+            value=request.value, from_unit=request.from_unit, to_unit=request.to_unit,
+            result=result, formula=f"{request.value} {request.from_unit} → {result} {request.to_unit}"
+        )
     else:
         # 未対応カテゴリ
         return ConvertResponse(
             value=request.value, from_unit=request.from_unit, to_unit=request.to_unit,
             result=0, formula="未対応のカテゴリです"
         )
-    
-    return ConvertResponse(
-        value=request.value, from_unit=request.from_unit, to_unit=request.to_unit,
-        result=result, formula=f"{request.value} {request.from_unit} → {result} {request.to_unit}"
-    )
