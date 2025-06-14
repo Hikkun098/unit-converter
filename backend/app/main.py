@@ -30,14 +30,19 @@ def get_categories():
             {"id": "data_size", "name": "データサイズ"}, 
             {"id": "weight", "name": "重量"},
             {"id": "time", "name": "時間"},
-            {"id": "temperature", "name": "温度"}
+            {"id": "temperature", "name": "温度"},
+            {"id": "area", "name": "面積"},
+            {"id": "volume", "name": "体積"},
+            {"id": "speed", "name": "速度"},
+            {"id": "pressure", "name": "圧力"},
+            {"id": "energy", "name": "エネルギー"}
         ]
     }
 
 # 単位変換API
 @app.post("/api/convert", response_model=ConvertResponse)
 def convert_units(request: ConvertRequest):
-    # データを外部ファイルから取得
+    
     if request.category in UNIT_DATA:
         units = UNIT_DATA[request.category]
         base_value = request.value * units[request.from_unit]
