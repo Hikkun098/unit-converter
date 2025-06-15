@@ -36,17 +36,23 @@ const handleCategoryClick = (categoryName: string) => {
     setOutputValue('');
   };
 
-  // 変換処理（簡単な例：距離の場合）
-const handleConvert = () => {
-  const value = parseFloat(inputValue);
-  if (!isNaN(value)) {
-    const conversions = (unitData as any)[selectedCategory]?.conversions;
-    if (conversions) {
-      // 基準単位に変換してから目標単位に変換
-      const baseValue = value * conversions[fromUnit];
-      const result = baseValue / conversions[toUnit];
-      setOutputValue(result.toString());
-    }
+  // 変換処理
+const handleConvert = async () => {
+  try {
+    // API呼び出し
+    const result = await convertUnits({
+      value: parseFloat(inputValue),
+      from_unit: fromUnit,
+      to_unit: toUnit,
+      category: selectedCategory
+    });
+    
+    // 結果を画面に表示
+    onOutputChange(result.result.toString());
+    
+  } catch (error) {
+    console.error('変換エラー:', error);
+    onOutputChange('変換に失敗しました');
   }
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { unitData } from '../data/unitData';
+import { convertUnits } from '../services/api';
 
 interface ConversionModalProps {
   isOpen: boolean;
@@ -51,11 +51,25 @@ export const ConversionModal = ({
               onChange={(e) => onFromUnitChange(e.target.value)}
               className="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg min-w-[80px] border focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {(unitData as any)[selectedCategory]?.units.map((unit: string) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
+            {/* とりあえず固定値で対応、後で改善 */}
+            {selectedCategory === 'distance' && (
+              <>
+                <option value="m">m</option>
+                <option value="km">km</option>
+                <option value="cm">cm</option>
+                <option value="mm">mm</option>
+                <option value="ft">ft</option>
+                <option value="inch">inch</option>
+              </>
+            )}
+            {selectedCategory === 'weight' && (
+              <>
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="lb">lb</option>
+                <option value="oz">oz</option>
+              </>
+            )}
             </select>
             <button
               onClick={onConvert}
@@ -82,11 +96,25 @@ export const ConversionModal = ({
               onChange={(e) => onToUnitChange(e.target.value)}
               className="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg min-w-[80px] border focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {(unitData as any)[selectedCategory]?.units.map((unit: string) => (
-                <option key={unit} value={unit}>
-                  {unit}
-                </option>
-              ))}
+              {/* とりあえず固定値で対応、後で改善 */}
+            {selectedCategory === 'distance' && (
+              <>
+                <option value="m">m</option>
+                <option value="km">km</option>
+                <option value="cm">cm</option>
+                <option value="mm">mm</option>
+                <option value="ft">ft</option>
+                <option value="inch">inch</option>
+              </>
+            )}
+            {selectedCategory === 'weight' && (
+              <>
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="lb">lb</option>
+                <option value="oz">oz</option>
+              </>
+            )}
             </select>
             <button className="px-4 py-3 bg-gray-300 text-gray-500 rounded-lg">
               ⇄
