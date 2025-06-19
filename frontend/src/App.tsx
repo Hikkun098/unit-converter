@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import {unitData} from './data/unitData';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { CategoryCard } from './components/CategoryCard';
 import { ConversionHistory } from './components/ConversionHistory';
 import { ConversionModal } from './components/ConversionModal';
+import { convertUnits } from './services/api';
 
 
 function App() {
@@ -20,12 +20,9 @@ const handleCategoryClick = (categoryName: string) => {
   setSelectedCategory(categoryName);
   setIsModalOpen(true);
   
-  // 選択されたカテゴリの単位を取得
-  const currentUnits = (unitData as any)[categoryName]?.units || [];
-  if (currentUnits.length > 0) {
-    setFromUnit(currentUnits[0]);  // 最初の単位を設定
-    setToUnit(currentUnits[1] || currentUnits[0]);  // 2番目の単位を設定
-  }
+  // とりあえず固定値で初期設定
+  setFromUnit('m');
+  setToUnit('km');
 };
 
   // モーダルを閉じる処理
@@ -39,20 +36,18 @@ const handleCategoryClick = (categoryName: string) => {
   // 変換処理
 const handleConvert = async () => {
   try {
-    // API呼び出し
     const result = await convertUnits({
       value: parseFloat(inputValue),
       from_unit: fromUnit,
       to_unit: toUnit,
-      category: selectedCategory
+      category: selectedCategory.toLowerCase() // 小文字に変換
     });
     
-    // 結果を画面に表示
-    onOutputChange(result.result.toString());
+    setOutputValue(result.result.toString());  // ← 正しい関数名
     
   } catch (error) {
     console.error('変換エラー:', error);
-    onOutputChange('変換に失敗しました');
+    setOutputValue('変換に失敗しました');       // ← 正しい関数名
   }
 };
 
