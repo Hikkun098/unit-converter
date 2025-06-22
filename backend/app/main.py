@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from data.unit_data import UNIT_DATA
 
@@ -17,6 +18,17 @@ class ConvertResponse(BaseModel):
     formula: str
 
 app = FastAPI()
+
+# CORS設定を追加
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # フロントエンドのURL許可
+    allow_credentials=True,
+    allow_methods=["*"],  # 全HTTPメソッド許可
+    allow_headers=["*"],  # 全ヘッダー許可
+)
+
+@app.get("/")  # 既存のコードはそのまま
 
 @app.get("/")
 def hello():
