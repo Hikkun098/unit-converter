@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { CategoryCard } from './components/CategoryCard';
 import { ConversionHistory } from './components/ConversionHistory';
 import { ConversionModal } from './components/ConversionModal';
-import { convertUnits } from './services/api';
+import { convertUnits, getCategories } from './services/api';
+
+// 型定義を追加
+interface Category {
+  id: string;
+  name: string;
+}
 
 
 function App() {
@@ -15,6 +21,21 @@ function App() {
   const [outputValue, setOutputValue] = useState('');
   const [fromUnit, setFromUnit] = useState('m');
   const [toUnit, setToUnit] = useState('km');
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  // カテゴリ取得
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (error) {
+        console.error('カテゴリ取得エラー:', error);
+      }
+    };
+    
+    fetchCategories();
+  }, []);
 
 const handleCategoryClick = (categoryName: string) => {
   setSelectedCategory(categoryName);
@@ -61,50 +82,13 @@ const handleConvert = async () => {
         {/* 左側：メインコンテンツ */}
         <main className="flex-1">
           <div className="grid grid-cols-3 gap-4 max-w-4xl">
-            <CategoryCard 
-              name="Distance" 
-              onClick={() => handleCategoryClick('Distance')} 
-            />
-
-            <CategoryCard 
-              name="Data Size" 
-              onClick={() => handleCategoryClick('Data Size')} 
-            />
-            
-            <CategoryCard 
-              name="Weight" 
-              onClick={() => handleCategoryClick('Weight')} 
-            />
-            
-            <CategoryCard 
-              name="Time" 
-              onClick={() => handleCategoryClick('Time')} 
-            />
-            
-            <CategoryCard 
-              name="Transfer Rate" 
-              onClick={() => handleCategoryClick('Transfer Rate')} 
-            />
-            
-            <CategoryCard 
-              name="Temperature" 
-              onClick={() => handleCategoryClick('Temperature')} 
-            />
-            
-            <CategoryCard 
-              name="Volume" 
-              onClick={() => handleCategoryClick('Volume')} 
-            />
-            
-            <CategoryCard 
-              name="Velocity" 
-              onClick={() => handleCategoryClick('Velocity')}
-            />
-            
-            <CategoryCard 
-              name="Accelerate" 
-              onClick={() => handleCategoryClick('Accelerate')}
-            />
+            {categories.map((category) => (
+              <CategoryCard
+                key={category.id}
+                name={category.name}        // ← APIから取得した日本語名
+                onClick={() => handleCategoryClick(category.id)}
+              />
+            ))}
           </div>
         </main>
 

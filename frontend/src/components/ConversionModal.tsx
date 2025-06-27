@@ -52,7 +52,7 @@ export const ConversionModal = ({
               className="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg min-w-[80px] border focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
             {/* とりあえず固定値で対応、後で改善 */}
-            {selectedCategory === 'distance' && (
+            {selectedCategory.toLowerCase() === 'distance' && (
               <>
                 <option value="m">m</option>
                 <option value="km">km</option>
@@ -62,7 +62,7 @@ export const ConversionModal = ({
                 <option value="inch">inch</option>
               </>
             )}
-            {selectedCategory === 'weight' && (
+            {selectedCategory.toLowerCase() === 'weight' && (
               <>
                 <option value="g">g</option>
                 <option value="kg">kg</option>
