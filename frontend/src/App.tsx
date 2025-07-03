@@ -21,21 +21,27 @@ function App() {
   const [outputValue, setOutputValue] = useState('');
   const [fromUnit, setFromUnit] = useState('m');
   const [toUnit, setToUnit] = useState('km');
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([
+  { id: 'distance', name: '距離(テスト)' }  // ← テスト用
+]);
 
   // カテゴリ取得
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        console.log('🔍 カテゴリ取得開始');
         const data = await getCategories();
+        console.log('📦 取得データ:', data);
         setCategories(data);
+        console.log('✅ categories state更新完了');
       } catch (error) {
-        console.error('カテゴリ取得エラー:', error);
+        console.error('❌ カテゴリ取得エラー:', error);
       }
     };
     
     fetchCategories();
   }, []);
+
 
 const handleCategoryClick = (categoryName: string) => {
   setSelectedCategory(categoryName);
