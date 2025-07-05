@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 from data.unit_data import UNIT_DATA
+from database import SessionLocal, ConversionHistory
+from datetime import datetime
 
 
 class ConvertRequest(BaseModel):
@@ -91,3 +94,61 @@ def convert_temperature(value, from_unit, to_unit):
         return celsius * 9/5 + 32
     elif to_unit == "K":
         return celsius + 273.15
+
+
+# データベースセッション取得
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# 履歴保存用のデータモデル
+class HistorySaveRequest(BaseModel):
+    category: str
+    value: float
+    from_unit: str
+    to_unit: str
+    result: float
+
+# 履歴保存API
+@app.post("/api/history")
+def save_history(request: HistorySaveRequest, db: Session = Depends(get_db)):
+    # 新しい履歴レコードを作成
+    db_history = ConversionHistory(
+        category=request.category,
+        value=request.value,
+        from_unit=request.from_unit,
+        to_unit=request.to_unit,
+        result=request.result,
+        created_at=datetime.utcnow()
+    )
+    
+    # データベースに保存
+    db.add(db_history)
+    db.commit()
+    db.refresh(db_history)
+    
+    return {"message": "履歴を保存しました", "id": db_history.id}
+
+# 履歴取得API
+@app.get("/api/history")
+def get_history(db: Session = Depends(get_db)):
+    # 最新10件の履歴を取得
+    histories = db.query(ConversionHistory).order_by(ConversionHistory.created_at.desc()).limit(10).all()
+    
+    return {
+        "histories": [
+            {
+                "id": h.id,
+                "category": h.category,
+                "value": h.value,
+                "from_unit": h.from_unit,
+                "to_unit": h.to_unit,
+                "result": h.result,
+                "created_at": h.created_at.isoformat()
+            }
+            for h in histories
+        ]
+    }
