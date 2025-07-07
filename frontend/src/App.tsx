@@ -5,6 +5,7 @@ import { CategoryCard } from './components/CategoryCard';
 import { ConversionHistory } from './components/ConversionHistory';
 import { ConversionModal } from './components/ConversionModal';
 import { convertUnits, getCategories } from './services/api';
+import { saveHistory } from './services/api';
 
 // 型定義を追加
 interface Category {
@@ -67,16 +68,26 @@ const handleConvert = async () => {
       value: parseFloat(inputValue),
       from_unit: fromUnit,
       to_unit: toUnit,
-      category: selectedCategory.toLowerCase() // 小文字に変換
+      category: selectedCategory.toLowerCase()
     });
     
-    setOutputValue(result.result.toString());  // ← 正しい関数名
+    setOutputValue(result.result.toString());
+    
+    // 履歴保存を追加 ← これが新しい部分
+    await saveHistory({
+      category: selectedCategory.toLowerCase(),
+      value: parseFloat(inputValue),
+      from_unit: fromUnit,
+      to_unit: toUnit,
+      result: result.result
+    });
     
   } catch (error) {
     console.error('変換エラー:', error);
-    setOutputValue('変換に失敗しました');       // ← 正しい関数名
+    setOutputValue('変換に失敗しました');
   }
 };
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
