@@ -30,7 +30,7 @@ interface HistorySaveRequest {
 }
 
 // 履歴取得用の型
-interface HistoryItem {
+export interface HistoryItem {
   id: number;           // 1
   category: string;     // "distance"
   value: number;        // 5.0
@@ -99,4 +99,5 @@ export const getHistory = async (): Promise<HistoryItem[]> => {
   const data: HistoryResponse = await response.json();
   return data.histories;  // HistoryItem[] の配列を返す
 };
+
 

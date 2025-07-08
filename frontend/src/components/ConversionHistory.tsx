@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getHistory, HistoryItem } from '../services/api';
 
 export const ConversionHistory = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  
-  const historyData = [
-    { conversion: "5 meters → 500 cm", time: "2分前" },
-    { conversion: "1024 MB → 1 GB", time: "5分前" },
-    { conversion: "100°C → 212°F", time: "10分前" }
-  ];
+  const [historyData, setHistoryData] = useState<HistoryItem[]>([]); // ← 型指定
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const data = await getHistory();
+        setHistoryData(data);
+      } catch (error) {
+        console.error('履歴取得エラー:', error);
+      }
+    };
+    
+    fetchHistory();
+  }, []);
 
   return (
     <aside className={`bg-white rounded-xl shadow border border-blue-200 transition-all duration-300 ease-in-out ${
       isCollapsed ? 'w-6 overflow-hidden' : 'w-80'
     }`}>
       {isCollapsed ? (
-        // 折りたたみ状態：とても細いバー
         <div className="h-full flex flex-col items-center justify-start pt-4">
           <button
             onClick={() => setIsCollapsed(false)}
@@ -26,7 +34,6 @@ export const ConversionHistory = () => {
           </button>
         </div>
       ) : (
-        // 展開状態：通常の履歴表示
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-700">
@@ -45,8 +52,12 @@ export const ConversionHistory = () => {
           <div className="space-y-3">
             {historyData.map((item, index) => (
               <div key={index} className="p-3 bg-gray-50 rounded-lg border">
-                <div className="text-sm text-gray-600">{item.conversion}</div>
-                <div className="text-xs text-gray-400">{item.time}</div>
+                <div className="text-sm text-gray-600">
+                  {item.value} {item.from_unit} → {item.result} {item.to_unit}
+                </div>
+                <div className="text-xs text-gray-400">
+                  {new Date(item.created_at).toLocaleString()}
+                </div>
               </div>
             ))}
           </div>
