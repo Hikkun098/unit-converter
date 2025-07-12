@@ -73,7 +73,7 @@ const handleConvert = async () => {
     
     setOutputValue(result.result.toString());
     
-    // 履歴保存を追加 ← これが新しい部分
+    // 履歴保存を追加
     await saveHistory({
       category: selectedCategory.toLowerCase(),
       value: parseFloat(inputValue),
@@ -102,7 +102,7 @@ const handleConvert = async () => {
             {categories.map((category) => (
               <CategoryCard
                 key={category.id}
-                name={category.name}        // ← APIから取得した日本語名
+                name={category.name}
                 onClick={() => handleCategoryClick(category.id)}
               />
             ))}
