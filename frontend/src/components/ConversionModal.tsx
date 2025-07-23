@@ -133,6 +133,12 @@ export const ConversionModal = ({
           { value: 'cal', label: 'cal' },
           { value: 'kWh', label: 'kWh' }
         ];
+      case 'bmi_calculator':
+        return [
+          { value: 'height', label: '身長(cm)' },
+          { value: 'weight', label: '体重(kg)' },
+          { value: 'bmi', label: 'BMI値' }
+        ];
       default:
         return [];
     }
