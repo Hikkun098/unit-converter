@@ -24,7 +24,6 @@ function App() {
   
   // カテゴリを拡張（固定データで先にテスト）
   const [categories, setCategories] = useState<Category[]>([
-    // 既存の単位変換
     { id: 'distance', name: '距離' },
     { id: 'data_size', name: 'データサイズ' },
     { id: 'weight', name: '重量' },
@@ -36,13 +35,8 @@ function App() {
     { id: 'pressure', name: '圧力' },
     { id: 'energy', name: 'エネルギー' },
     
-    // 新しく追加する科学計算系
-    { id: 'currency', name: '通貨' },
     { id: 'angle', name: '角度' },
-    { id: 'fuel_efficiency', name: '燃費' },
-    { id: 'bmi_calculator', name: 'BMI計算' },
-    { id: 'physics_force', name: '物理（力学）' },
-    { id: 'chemistry_molar', name: '化学（モル濃度）' }
+    { id: 'fuel_efficiency', name: '燃費' }
   ]);
 
   // カテゴリ取得（一旦コメントアウトして固定データでテスト）
@@ -68,25 +62,20 @@ function App() {
     setSelectedCategory(categoryName);
     setIsModalOpen(true);
     
-    // カテゴリ別の初期単位設定
-    const defaultUnits = {
-      'distance': { from: 'm', to: 'km' },
-      'data_size': { from: 'MB', to: 'GB' },
-      'weight': { from: 'kg', to: 'g' },
-      'time': { from: 'h', to: 'min' },
-      'temperature': { from: 'C', to: 'F' },
-      'area': { from: 'm2', to: 'km2' },
-      'volume': { from: 'L', to: 'mL' },
-      'speed': { from: 'km/h', to: 'm/s' },
-      'pressure': { from: 'Pa', to: 'kPa' },
-      'energy': { from: 'J', to: 'kJ' },
-      'currency': { from: 'JPY', to: 'USD' },
-      'angle': { from: 'deg', to: 'rad' },
-      'fuel_efficiency': { from: 'km/L', to: 'L/100km' },
-      'bmi_calculator': { from: 'height_weight', to: 'bmi' },
-      'physics_force': { from: 'mass_acceleration', to: 'force' },
-      'chemistry_molar': { from: 'moles_volume', to: 'molarity' }
-    };
+  const defaultUnits = {
+    'distance': { from: 'm', to: 'km' },
+    'data_size': { from: 'MB', to: 'GB' },
+    'weight': { from: 'kg', to: 'g' },
+    'time': { from: 'h', to: 'min' },
+    'temperature': { from: 'C', to: 'F' },
+    'area': { from: 'm2', to: 'km2' },
+    'volume': { from: 'L', to: 'mL' },
+    'speed': { from: 'km/h', to: 'm/s' },
+    'pressure': { from: 'Pa', to: 'kPa' },
+    'energy': { from: 'J', to: 'kJ' },
+    'angle': { from: 'deg', to: 'rad' },
+    'fuel_efficiency': { from: 'km/L', to: 'L/100km' }
+  };
     
     const defaults = defaultUnits[categoryName as keyof typeof defaultUnits] || { from: 'm', to: 'km' };
     setFromUnit(defaults.from);

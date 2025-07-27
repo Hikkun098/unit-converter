@@ -42,10 +42,10 @@ export const ConversionModal = ({
     }
   };
 
-  // カテゴリ名の日本語変換（完全版）
+  // カテゴリ名の日本語変換（シンプル版）
   const getCategoryNameInJapanese = (category: string) => {
     const categoryMap: { [key: string]: string } = {
-      // 既存の単位変換
+      // 基本の単位変換
       'distance': '距離',
       'data_size': 'データサイズ',
       'weight': '重量',
@@ -57,20 +57,16 @@ export const ConversionModal = ({
       'pressure': '圧力',
       'energy': 'エネルギー',
       
-      // 新しく追加したカテゴリ
-      'currency': '通貨',
+      // シンプルな追加変換のみ
       'angle': '角度',
-      'fuel_efficiency': '燃費',
-      'bmi_calculator': 'BMI計算',
-      'physics_force': '物理（力学）',
-      'chemistry_molar': '化学（モル濃度）'
+      'fuel_efficiency': '燃費'
     };
     return categoryMap[category.toLowerCase()] || category;
   };
 
   const getUnitOptions = () => {
     switch (selectedCategory.toLowerCase()) {
-      // 既存の単位変換
+      // 基本の単位変換
       case 'distance':
         return [
           { value: 'm', label: 'm' },
@@ -144,7 +140,7 @@ export const ConversionModal = ({
           { value: 'kWh', label: 'kWh' }
         ];
         
-      // 新しく追加したカテゴリ
+      // シンプルな追加変換のみ
       case 'angle':
         return [
           { value: 'deg', label: '度 (°)' },
@@ -152,38 +148,12 @@ export const ConversionModal = ({
           { value: 'grad', label: 'グラード (grad)' },
           { value: 'turn', label: '回転 (turn)' }
         ];
-      case 'currency':
-        return [
-          { value: 'JPY', label: '円 (¥)' },
-          { value: 'USD', label: 'ドル ($)' },
-          { value: 'EUR', label: 'ユーロ (€)' },
-          { value: 'GBP', label: 'ポンド (£)' },
-          { value: 'CNY', label: '人民元 (¥)' }
-        ];
       case 'fuel_efficiency':
         return [
           { value: 'km/L', label: 'km/L' },
           { value: 'L/100km', label: 'L/100km' },
           { value: 'mpg_us', label: 'mpg (US)' },
           { value: 'mpg_uk', label: 'mpg (UK)' }
-        ];
-      case 'bmi_calculator':
-        return [
-          { value: 'height', label: '身長 (cm)' },
-          { value: 'weight', label: '体重 (kg)' },
-          { value: 'bmi', label: 'BMI値' }
-        ];
-      case 'physics_force':
-        return [
-          { value: 'mass', label: '質量 (kg)' },
-          { value: 'acceleration', label: '加速度 (m/s²)' },
-          { value: 'force', label: '力 (N)' }
-        ];
-      case 'chemistry_molar':
-        return [
-          { value: 'moles', label: 'モル数 (mol)' },
-          { value: 'volume', label: '体積 (L)' },
-          { value: 'molarity', label: 'モル濃度 (mol/L)' }
         ];
       default:
         return [];
@@ -217,12 +187,15 @@ export const ConversionModal = ({
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-3"
                 placeholder="値を入力"
               />
-              <button
-                onClick={onConvert}
-                className="px-6 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium shadow-sm hover:shadow-md"
-              >
-                変換
-              </button>
+              {/* 変換ボタンを中央に配置 */}
+              <div className="flex justify-center">
+                <button
+                  onClick={onConvert}
+                  className="px-8 py-2.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium shadow-sm hover:shadow-md"
+                >
+                  変換
+                </button>
+              </div>
             </div>
             <div className="flex flex-col items-center">
               <select
