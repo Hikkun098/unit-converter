@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends 
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -50,7 +50,9 @@ def get_categories():
             {"id": "volume", "name": "体積"},
             {"id": "speed", "name": "速度"},
             {"id": "pressure", "name": "圧力"},
-            {"id": "energy", "name": "エネルギー"}
+            {"id": "energy", "name": "エネルギー"},
+            {"id": "angle", "name": "角度"},
+            {"id": "fuel_efficiency", "name": "燃費"}
         ]
     }
 
