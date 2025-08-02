@@ -2,8 +2,8 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from data.unit_data import UNIT_DATA
-from database import SessionLocal, ConversionHistory
+from .data.unit_data import UNIT_DATA
+from .database import SessionLocal, ConversionHistory
 from datetime import datetime
 
 
@@ -30,8 +30,6 @@ app.add_middleware(
     allow_methods=["*"],  # 全HTTPメソッド許可
     allow_headers=["*"],  # 全ヘッダー許可
 )
-
-@app.get("/")  # 既存のコードはそのまま
 
 @app.get("/")
 def hello():
