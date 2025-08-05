@@ -22,22 +22,22 @@ interface Category {
 
 // 履歴保存用の型（バックエンドのHistorySaveRequestと対応）
 interface HistorySaveRequest {
-  category: string;     // "distance"
-  value: number;        // 5.0
-  from_unit: string;    // "m"
-  to_unit: string;      // "cm"
-  result: number;       // 500.0
+  category: string;
+  value: number;
+  from_unit: string;
+  to_unit: string;
+  result: number;
 }
 
 // 履歴取得用の型
 export interface HistoryItem {
-  id: number;           // 1
-  category: string;     // "distance"
-  value: number;        // 5.0
-  from_unit: string;    // "m"
-  to_unit: string;      // "cm"
-  result: number;       // 500.0
-  created_at: string;   // "2025-01-09T14:30:00"
+  id: number;
+  category: string;
+  value: number;
+  from_unit: string;
+  to_unit: string;
+  result: number;
+  created_at: string;
 }
 
 interface HistoryResponse {
@@ -83,8 +83,6 @@ export const saveHistory = async (request: HistorySaveRequest): Promise<void> =>
   if (!response.ok) {
     throw new Error('履歴保存に失敗しました');
   }
-  
-  // 保存成功（戻り値なし）
 };
 
 
