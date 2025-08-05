@@ -1,15 +1,169 @@
-# 単位変換アプリ
+# 🔄 単位変換アプリ（ConvertPro）
 
 様々な単位を簡単に変換できるWebアプリケーション。
+直感的なUIと豊富な変換カテゴリを提供します。
 
-## 機能
+![アプリのトップ画像のスクリーンショット](./app_top.png)
+![アプリの変換画面のスクリーンショット](./app_modal.png)
 
-- データサイズ変換（bit, byte, KB, MB, GB等）
-- 長さの単位変換（mm, cm, m, km, インチ等）
-- 温度の単位変換（摂氏, 華氏, ケルビン）
-- その他の単位変換
+## ✨ 機能
 
-## 技術スタック
+### 📏 単位変換カテゴリ（12種類）
+- **距離**: m, km, cm, mm, ft, inch
+- **データサイズ**: B, KB, MB, GB, TB
+- **重量**: g, kg, lb, oz
+- **時間**: s, min, h, day
+- **温度**: °C, °F, K
+- **面積**: m², km², cm², ft²
+- **体積**: L, mL, m³, gal
+- **速度**: m/s, km/h, mph, ft/s
+- **圧力**: Pa, kPa, bar, psi
+- **エネルギー**: J, kJ, cal, kWh
+- **角度**: 度, ラジアン, グラード
+- **燃費**: km/L, L/100km, mpg
 
-- バックエンド: Python + FastAPI
-- フロントエンド: React + TypeScript
+### 🔧 主要機能
+- リアルタイム単位変換
+- 変換履歴の保存・表示
+- 単位の相互変換（スワップ機能）
+- レスポンシブデザイン
+- 直感的なモーダルUI
+
+## 🛠️ 技術スタック
+
+### フロントエンド
+- **React 19.1.0** - UIライブラリ
+- **TypeScript** - 型安全性
+- **Tailwind CSS** - スタイリング
+- **Vite** - ビルドツール
+
+### バックエンド
+- **FastAPI** - PythonのWebフレームワーク
+- **SQLAlchemy** - ORM
+- **SQLite** - データベース
+- **Pydantic** - データバリデーション
+- **Uvicorn** - ASGIサーバー
+
+### その他
+- **CORS** - クロスオリジン対応
+- **REST API** - API設計
+
+## 🚀 セットアップ
+
+### 前提条件
+- Node.js (v18以上)
+- Python (v3.10以上)
+- pip
+
+### バックエンドのセットアップ
+```bash
+# リポジトリをクローン
+git clone https://github.com/Hikkun098/unit-converter.git
+cd unit-converter
+
+# バックエンドディレクトリに移動
+cd backend
+
+# 仮想環境作成
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# 依存関係インストール
+pip install fastapi uvicorn sqlalchemy
+
+# サーバー起動
+uvicorn app.main:app --reload
+```
+
+### フロントエンドのセットアップ
+```bash
+# フロントエンドディレクトリに移動
+cd frontend
+
+# 依存関係インストール
+npm install
+
+# 開発サーバー起動
+npm start
+```
+
+### アクセス
+- フロントエンド: http://localhost:3000
+- バックエンドAPI: http://localhost:8000
+- API仕様書: http://localhost:8000/docs
+
+## 📁 プロジェクト構造
+
+```
+unit-converter/
+├── backend/
+│   ├── app/
+│   │   ├── main.py              # FastAPIメインアプリ
+│   │   ├── database.py          # データベース設定
+│   │   ├── models.py            # データモデル
+│   │   └── data/
+│   │       └── unit_data.py     # 変換係数データ
+│   └── requirements.txt         # Python依存関係
+├── frontend/
+│   ├── src/
+│   │   ├── components/          # Reactコンポーネント
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   ├── CategoryCard.tsx
+│   │   │   ├── ConversionModal.tsx
+│   │   │   └── ConversionHistory.tsx
+│   │   ├── services/
+│   │   │   └── api.ts           # API呼び出し
+│   │   └── App.tsx              # メインコンポーネント
+│   ├── package.json
+│   └── tailwind.config.js
+├── LICENSE
+└── README.md
+```
+
+## 🌐 API エンドポイント
+
+### 変換API
+```http
+POST /api/convert
+Content-Type: application/json
+
+{
+  "value": 1000,
+  "from_unit": "m",
+  "to_unit": "km",
+  "category": "distance"
+}
+```
+
+### カテゴリ一覧
+```http
+GET /api/categories
+```
+
+### 履歴機能
+```http
+GET /api/history     # 履歴取得
+POST /api/history    # 履歴保存
+```
+
+## 🔮 今後の改善予定
+
+- [ ] ユーザー認証機能
+- [ ] セッションベースの履歴分離
+- [ ] 単位変換のカテゴリをより充実させる
+- [ ] カテゴリ追加時UI/UX改善
+- [ ] ダークモード対応
+- [ ] レスポンシブデザインの更なる改善
+- [ ] 変換結果のコピー機能
+- [ ] 計算式の表示機能
+- [ ] お気に入り変換の保存機能
+- [ ] 検索機能（単位名から検索）
+
+## 🤝 開発者
+
+**[あなたの名前]** - 個人開発
+
+## 📄 ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。
