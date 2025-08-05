@@ -162,7 +162,7 @@ POST /api/history    # 履歴保存
 
 ## 🤝 開発者
 
-**[あなたの名前]** - 個人開発
+**Murakami Hidehiro** - 個人開発
 
 ## 📄 ライセンス
 
