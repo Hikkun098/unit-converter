@@ -4,7 +4,7 @@
 直感的なUIと豊富な変換カテゴリを提供します。
 
 ## 🏗️ アーキテクチャ
-![システム構成](./images/architecture.png)
+![システム構成](./images/app_architecture.png)
 
 ## 📱 アプリ画面
 ### メイン画面
