@@ -3,9 +3,6 @@
 様々な単位を簡単に変換できるWebアプリケーション。
 直感的なUIと豊富な変換カテゴリを提供します。
 
-## 🏗️ アーキテクチャ
-![システム構成](./images/app_architecture.png)
-
 ## 📱 アプリ画面
 ### メイン画面
 ![アプリトップ画面](./images/app_top.png)
@@ -104,6 +101,9 @@ npm start
 React + TypeScript → Vercel (フロントエンド)
 FastAPI Backend → Railway (バックエンド)
 Vercel ↔ Railway (API連携)
+
+## 🏗️ アーキテクチャ
+![システム構成](./images/app_architecture.png)
 
 
 ## 📁 プロジェクト構造
