@@ -3,8 +3,15 @@
 様々な単位を簡単に変換できるWebアプリケーション。
 直感的なUIと豊富な変換カテゴリを提供します。
 
-![アプリのトップ画像のスクリーンショット](./app_top.png)
-![アプリの変換画面のスクリーンショット](./app_modal.png)
+## 🏗️ アーキテクチャ
+![システム構成](./images/architecture.png)
+
+## 📱 アプリ画面
+### メイン画面
+![アプリトップ画面](./images/app_top.png)
+
+### 変換モーダル
+![変換モーダル画面](./images/app_modal.png)
 
 ## ✨ 機能
 
@@ -91,6 +98,13 @@ npm start
 - フロントエンド: http://localhost:3000
 - バックエンドAPI: http://localhost:8000
 - API仕様書: http://localhost:8000/docs
+
+
+## 🏗️ アーキテクチャ構成
+React + TypeScript → Vercel (フロントエンド)
+FastAPI Backend → Railway (バックエンド)
+Vercel ↔ Railway (API連携)
+
 
 ## 📁 プロジェクト構造
 
