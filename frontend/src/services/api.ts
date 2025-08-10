@@ -1,4 +1,7 @@
 // API呼び出し用の型定義
+
+const API_BASE_URL = 'https://convert-pro-production.up.railway.app';
+
 interface ConvertRequest {
   value: number;
   from_unit: string;
@@ -18,7 +21,6 @@ interface Category {
   id: string;
   name: string;
 }
-
 
 // 履歴保存用の型（バックエンドのHistorySaveRequestと対応）
 interface HistorySaveRequest {
@@ -44,17 +46,16 @@ interface HistoryResponse {
   histories: HistoryItem[];
 }
 
-
 // カテゴリ一覧を取得する関数
 export const getCategories = async (): Promise<Category[]> => {
-  const response = await fetch('http://127.0.0.1:8000/api/categories');
+  const response = await fetch(`${API_BASE_URL}/api/categories`);
   const data = await response.json();
   return data.categories;
 };
 
 // 単位変換を実行する関数
 export const convertUnits = async (request: ConvertRequest): Promise<ConvertResponse> => {
-  const response = await fetch('http://127.0.0.1:8000/api/convert', {
+  const response = await fetch(`${API_BASE_URL}/api/convert`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -69,15 +70,14 @@ export const convertUnits = async (request: ConvertRequest): Promise<ConvertResp
   return await response.json();
 };
 
-
 // 履歴を保存する関数
 export const saveHistory = async (request: HistorySaveRequest): Promise<void> => {
-  const response = await fetch('http://127.0.0.1:8000/api/history', {
-    method: 'POST',                           // POSTメソッド
+  const response = await fetch(`${API_BASE_URL}/api/history`, {
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json',     // JSON形式で送信
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(request),            // データをJSON文字列に変換
+    body: JSON.stringify(request),
   });
   
   if (!response.ok) {
@@ -85,17 +85,14 @@ export const saveHistory = async (request: HistorySaveRequest): Promise<void> =>
   }
 };
 
-
 // 履歴を取得する関数
 export const getHistory = async (): Promise<HistoryItem[]> => {
-  const response = await fetch('http://127.0.0.1:8000/api/history');
+  const response = await fetch(`${API_BASE_URL}/api/history`);
   
   if (!response.ok) {
     throw new Error('履歴取得に失敗しました');
   }
   
   const data: HistoryResponse = await response.json();
-  return data.histories;  // HistoryItem[] の配列を返す
+  return data.histories;
 };
-
-
