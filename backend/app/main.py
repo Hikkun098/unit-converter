@@ -25,10 +25,13 @@ app = FastAPI()
 # CORS設定を追加
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # フロントエンドのURL許可
+    allow_origins=[
+        "http://localhost:3000",  # ローカル開発用
+        "https://unit-converter-two-murex.vercel.app"  # 本番用（追加）
+    ],
     allow_credentials=True,
-    allow_methods=["*"],  # 全HTTPメソッド許可
-    allow_headers=["*"],  # 全ヘッダー許可
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
