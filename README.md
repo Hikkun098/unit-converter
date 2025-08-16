@@ -119,18 +119,28 @@ unit-converter/
 │   │       └── unit_data.py     # 変換係数データ
 │   └── requirements.txt         # Python依存関係
 ├── frontend/
-│   ├── src/
-│   │   ├── components/          # Reactコンポーネント
-│   │   │   ├── Header.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   ├── CategoryCard.tsx
-│   │   │   ├── ConversionModal.tsx
-│   │   │   └── ConversionHistory.tsx
-│   │   ├── services/
-│   │   │   └── api.ts           # API呼び出し
-│   │   └── App.tsx              # メインコンポーネント
-│   ├── package.json
-│   └── tailwind.config.js
+│ ├── src/
+│ │ ├── components/ # Reactコンポーネント
+│ │ │ ├── Header.tsx
+│ │ │ ├── Footer.tsx
+│ │ │ ├── CategoryCard.tsx
+│ │ │ ├── ConversionModal.tsx
+│ │ │ └── ConversionHistory.tsx
+│ │ ├── hooks/
+│ │ │ └── useConversion.tsx
+│ │ ├── data/
+│ │ │ └── unitData.ts
+│ │ ├── services/
+│ │ │ └── api.ts # API呼び出し
+│ │ ├── types/
+│ │ │ └── index.tsx
+│ │ ├── App.css
+│ │ ├── App.test.tsx
+│ │ ├── App.tsx # メインコンポーネント
+│ │ ├── index.css
+│ │ └── index.tsx
+│ ├── package.json
+│ └── tailwind.config.js
 ├── LICENSE
 └── README.md
 ```
