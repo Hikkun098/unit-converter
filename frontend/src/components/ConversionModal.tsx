@@ -1,5 +1,6 @@
 import React from 'react';
 import { convertUnits } from '../services/api';
+import { ALL_CATEGORIES } from '../constants/categories';
 
 interface ConversionModalProps {
   isOpen: boolean;
@@ -36,128 +37,31 @@ export const ConversionModal = ({
     onFromUnitChange(toUnit);
     onToUnitChange(tempUnit);
     
-    // 値も切り替え
     if (outputValue && outputValue !== "変換結果") {
       onInputChange(outputValue);
     }
   };
 
-  // カテゴリ名の日本語変換（シンプル版）
-  const getCategoryNameInJapanese = (category: string) => {
-    const categoryMap: { [key: string]: string } = {
-      // 基本の単位変換
-      'distance': '距離',
-      'data_size': 'データサイズ',
-      'weight': '重量',
-      'time': '時間',
-      'temperature': '温度',
-      'area': '面積',
-      'volume': '体積',
-      'speed': '速度',
-      'pressure': '圧力',
-      'energy': 'エネルギー',
-      
-      // シンプルな追加変換のみ
-      'angle': '角度',
-      'fuel_efficiency': '燃費'
-    };
-    return categoryMap[category.toLowerCase()] || category;
+  // categories.ts からカテゴリ名を取得
+  const getCategoryNameInJapanese = (categoryId: string) => {
+    const category = ALL_CATEGORIES.find(cat => cat.id === categoryId);
+    return category?.name || categoryId;
   };
 
+  // categories.ts から単位リストを取得
   const getUnitOptions = () => {
-    switch (selectedCategory.toLowerCase()) {
-      // 基本の単位変換
-      case 'distance':
-        return [
-          { value: 'm', label: 'm' },
-          { value: 'km', label: 'km' },
-          { value: 'cm', label: 'cm' },
-          { value: 'mm', label: 'mm' },
-          { value: 'ft', label: 'ft' },
-          { value: 'inch', label: 'inch' }
-        ];
-      case 'data_size':
-        return [
-          { value: 'B', label: 'B' },
-          { value: 'KB', label: 'KB' },
-          { value: 'MB', label: 'MB' },
-          { value: 'GB', label: 'GB' },
-          { value: 'TB', label: 'TB' }
-        ];
-      case 'weight':
-        return [
-          { value: 'g', label: 'g' },
-          { value: 'kg', label: 'kg' },
-          { value: 'lb', label: 'lb' },
-          { value: 'oz', label: 'oz' }
-        ];
-      case 'time':
-        return [
-          { value: 's', label: 's' },
-          { value: 'min', label: 'min' },
-          { value: 'h', label: 'h' },
-          { value: 'day', label: 'day' }
-        ];
-      case 'temperature':
-        return [
-          { value: 'C', label: '°C' },
-          { value: 'F', label: '°F' },
-          { value: 'K', label: 'K' }
-        ];
-      case 'area':
-        return [
-          { value: 'm2', label: 'm²' },
-          { value: 'km2', label: 'km²' },
-          { value: 'cm2', label: 'cm²' },
-          { value: 'ft2', label: 'ft²' }
-        ];
-      case 'volume':
-        return [
-          { value: 'L', label: 'L' },
-          { value: 'mL', label: 'mL' },
-          { value: 'm3', label: 'm³' },
-          { value: 'gal', label: 'gal' }
-        ];
-      case 'speed':
-        return [
-          { value: 'm/s', label: 'm/s' },
-          { value: 'km/h', label: 'km/h' },
-          { value: 'mph', label: 'mph' },
-          { value: 'ft/s', label: 'ft/s' }
-        ];
-      case 'pressure':
-        return [
-          { value: 'Pa', label: 'Pa' },
-          { value: 'kPa', label: 'kPa' },
-          { value: 'bar', label: 'bar' },
-          { value: 'psi', label: 'psi' }
-        ];
-      case 'energy':
-        return [
-          { value: 'J', label: 'J' },
-          { value: 'kJ', label: 'kJ' },
-          { value: 'cal', label: 'cal' },
-          { value: 'kWh', label: 'kWh' }
-        ];
-        
-      // シンプルな追加変換のみ
-      case 'angle':
-        return [
-          { value: 'deg', label: '度 (°)' },
-          { value: 'rad', label: 'ラジアン (rad)' },
-          { value: 'grad', label: 'グラード (grad)' },
-          { value: 'turn', label: '回転 (turn)' }
-        ];
-      case 'fuel_efficiency':
-        return [
-          { value: 'km/L', label: 'km/L' },
-          { value: 'L/100km', label: 'L/100km' },
-          { value: 'mpg_us', label: 'mpg (US)' },
-          { value: 'mpg_uk', label: 'mpg (UK)' }
-        ];
-      default:
-        return [];
+    const category = ALL_CATEGORIES.find(cat => cat.id === selectedCategory.toLowerCase());
+    
+    if (!category) {
+      console.warn(`Category not found: ${selectedCategory}`);
+      return [];
     }
+
+    // units 配列をオプション形式に変換
+    return category.units.map(unit => ({
+      value: unit,
+      label: unit
+    }));
   };
 
   return (
@@ -165,7 +69,9 @@ export const ConversionModal = ({
       <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl" onClick={(e) => e.stopPropagation()}>
         {/* ヘッダー */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-blue-600">{getCategoryNameInJapanese(selectedCategory)} 変換</h2>
+          <h2 className="text-2xl font-bold text-blue-600">
+            {getCategoryNameInJapanese(selectedCategory)} 変換
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"

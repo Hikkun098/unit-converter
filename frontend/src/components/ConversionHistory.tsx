@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { getHistory, HistoryItem } from '../services/api';
 
-export const ConversionHistory = () => {
+// Props の型定義
+interface ConversionHistoryProps {
+  updateTrigger: number;
+}
+
+// propsを受け取るように変更
+export const ConversionHistory = ({ updateTrigger }: ConversionHistoryProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [historyData, setHistoryData] = useState<HistoryItem[]>([]); // ← 型指定
+  const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -16,7 +22,7 @@ export const ConversionHistory = () => {
     };
     
     fetchHistory();
-  }, []);
+  }, [updateTrigger]); // updateTriggerを依存配列に追加
 
   return (
     <aside className={`bg-white rounded-xl shadow border border-blue-200 transition-all duration-300 ease-in-out ${
