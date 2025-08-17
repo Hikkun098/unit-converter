@@ -128,8 +128,8 @@ unit-converter/
 │ │ │ └── ConversionHistory.tsx
 │ │ ├── hooks/
 │ │ │ └── useConversion.tsx
-│ │ ├── data/
-│ │ │ └── unitData.ts
+│ │ ├── constants/
+│ │ │ └── categories.ts
 │ │ ├── services/
 │ │ │ └── api.ts # API呼び出し
 │ │ ├── types/
@@ -175,8 +175,7 @@ POST /api/history    # 履歴保存
 ## 🔮 今後の改善予定
 
 ### 機能追加
-- [ ] 変換履歴への即時反映（現在の課題）
-- [ ] セッション別履歴管理
+- [ ] セッション別履歴管理(現在対応中の課題)
 - [ ] 変換履歴へのメモ機能
 - [ ] 単位変換のカテゴリをより充実させる
 - [ ] 変換結果のコピー機能
@@ -185,7 +184,7 @@ POST /api/history    # 履歴保存
 
 ### UI/UX改善
 - [ ] ダークモード対応
-- [ ] レスポンシブUIの改善
+- [ ] レスポンシブUIの改善(現在対応中の課題)
 - [ ] カテゴリ追加時UI/UX改善
 - [ ] PWA対応
 
