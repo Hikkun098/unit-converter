@@ -99,8 +99,8 @@ npm start
 
 ## 🏗️ アーキテクチャ構成
 React + TypeScript → Vercel (フロントエンド)
-FastAPI Backend → Railway (バックエンド)
-Vercel ↔ Railway (API連携)
+FastAPI Backend → Render (バックエンド)
+Vercel ↔ Render (API連携)
 
 ## 🏗️ アーキテクチャ
 ![システム構成](./images/app_architecture.png)
