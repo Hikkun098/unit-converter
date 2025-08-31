@@ -1,6 +1,6 @@
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
-sqlalchemy==2.0.25
+sqlalchemy==1.4.53
 python-multipart==0.0.6
 databases==0.8.0
 aiosqlite==0.19.0
