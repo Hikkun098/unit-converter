@@ -1,7 +1,7 @@
 // API呼び出し用の型定義
 
-const API_BASE_URL = 'https://convert-pro-production.up.railway.app';
-
+// services/api.ts
+const API_BASE_URL = 'https://unit-converter-api.onrender.com';
 interface ConvertRequest {
   value: number;
   from_unit: string;
