@@ -29,6 +29,7 @@ app.add_middleware(
         "http://localhost:3000",  # ローカル開発用
         "https://unit-converter-two-murex.vercel.app"  # 本番用（追加）
     ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
